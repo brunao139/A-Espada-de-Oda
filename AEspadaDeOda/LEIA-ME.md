@@ -8,6 +8,8 @@ Protótipo jogável em Godot 4.7.2, baseado no mangá autoral do usuário. Youka
 
 Abra `project.godot` no Godot, aguarde a importação dos recursos e pressione **F5**. Clique na janela do jogo para dar foco ao teclado. **F8** encerra uma execução iniciada pelo editor.
 
+F5 começa pela nova introdução em `scenes/intro.tscn`: Japão ao pôr do sol, viagem no tempo, cidade futurista, salto e título provisório. Qualquer tecla, botão do controle ou clique inicia a fase após soltar o comando, inclusive durante a abertura. A fase continua em `scenes/movement_lab.tscn`; R reinicia apenas a fase. A abertura não possui áudio nesta versão.
+
 | Controle | Ação |
 |---|---|
 | A/D ou ←/→ | Correr para os dois lados |

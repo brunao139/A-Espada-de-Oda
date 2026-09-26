@@ -1,6 +1,16 @@
 # A Espada de Oda — resumo para continuar em outro chat
 
-Atualizado em 25/09/2026. Versão do projeto: **0.1.3**. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
+Atualizado em 26/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
+
+## Nova introdução — 26/09/2026
+
+- Repositório: https://github.com/brunao139/A-Espada-de-Oda. Use a cópia Git atualizada para continuar; o pacote ZIP original de transferência é anterior à introdução.
+- `scenes/intro.tscn` é a cena inicial. A sequência dura cerca de 12 segundos: Youkai corre da direita para a esquerda no Japão, um clarão ciano cobre a troca para o futuro, ele continua no mesmo sentido e salta da borda esquerda de um prédio. O título provisório aparece com a frase “Aperte qualquer botão para iniciar”.
+- Qualquer tecla, botão do controle, clique ou toque inicia a fase, inclusive durante a abertura. A transição aguarda a soltura do comando inicial para evitar ataque ou salto involuntário na fase. Movimento do mouse, analógico e repetição automática de tecla não iniciam.
+- `scripts/intro.gd` controla a linha do tempo, paralaxe, luz, título e troca de cena. O ator reutiliza as animações existentes com física e colisões desligadas; nenhum arquivo de movimento, combate ou correção da espada foi modificado.
+- Os cenários novos estão em `assets/intro/japan.png` e `future.png`. Foram gerados em pixel art a partir da direção visual das duas referências do usuário. `assets/intro/INTRO.md` registra os prompts e a fonte Press Start 2P, distribuída com licença OFL.
+- Para substituir pelo logo futuro, altere a criação do título em `_build_title()`, preservando o prompt e o fluxo de entrada. Ainda não há áudio na abertura.
+- `tests/intro_test.gd`: 16 verificações de fluxo/entrada, mais 6 capturas opcionais em execução gráfica. Os 34 testes anteriores de movimento/combate continuam passando no Godot 4.7.2. A aprovação artística permanece a cargo do usuário.
 
 ## Visão do jogo
 
@@ -12,7 +22,7 @@ A cidade futurista segue a referência fornecida: lua turquesa, prédios azuis, 
 
 - Desenvolvido e testado com **Godot 4.7.2 stable**, versão padrão, usando GDScript e renderização Compatibility.
 - O projeto editável está em `AEspadaDeOda/project.godot`. Importe esse arquivo no Godot, espere a importação das imagens e pressione F5.
-- Cena principal: `res://scenes/movement_lab.tscn`.
+- Cena inicial: `res://scenes/intro.tscn`. Primeira fase: `res://scenes/movement_lab.tscn`.
 - O pacote não precisa dos caminhos antigos do computador para executar o jogo. Todos os recursos usados pelo jogo estão dentro da pasta do projeto.
 - O antigo `JOGAR.cmd` contém um caminho específico da máquina anterior. Ele foi excluído do pacote de transferência: use o editor e F5.
 - A pasta `.godot` é cache: foi excluída e será recriada. Preserve `.uid` e `.import`, que acompanham os arquivos-fonte.
@@ -81,6 +91,7 @@ A versão foi validada com execução gráfica e 34 verificações automáticas 
 
 ```text
 godot --headless --path <pasta-AEspadaDeOda> --script res://tests/smoke_test.gd
+godot --headless --path <pasta-AEspadaDeOda> --script res://tests/intro_test.gd
 ```
 
 Aqui `godot` representa o executável do Godot instalado no novo computador. Para importar pela linha de comando:

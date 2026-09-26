@@ -14,6 +14,8 @@ Protótipo 2D de ação e plataforma baseado no mangá autoral A Espada de Oda, 
 3. No Godot, importe `AEspadaDeOda/project.godot`.
 4. Aguarde a importação das imagens e pressione **F5**.
 
+O jogo começa com uma abertura de aproximadamente 12 segundos: Youkai corre pelo Japão, atravessa uma transição de luz para uma cidade futurista e salta de um prédio antes da tela de título. Pressione qualquer tecla, botão do controle ou clique para iniciar a primeira fase; também é possível iniciar durante a abertura. Solte o botão para concluir a transição. O título é provisório e poderá receber o logo original depois.
+
 O editor, os modelos de exportação e os executáveis do jogo não fazem parte do repositório. A pasta `.godot` será recriada automaticamente. Os arquivos `.uid` e `.import` são versionados e devem ser preservados.
 
 ## Controles
@@ -52,6 +54,8 @@ Leia [CONTINUAR_A_ESPADA_DE_ODA.md](CONTINUAR_A_ESPADA_DE_ODA.md) antes de alter
 - `AEspadaDeOda/scripts/`: movimento, combate, interface e efeitos.
 - `AEspadaDeOda/assets/`: artes utilizadas no jogo e documentação visual.
 - `AEspadaDeOda/tests/`: testes de regressão e verificação.
+- `AEspadaDeOda/scenes/intro.tscn` e `scripts/intro.gd`: abertura e tela de título, separadas da física e combate.
+- `AEspadaDeOda/assets/intro/`: dois cenários em pixel art, fonte e licença; veja `INTRO.md` nessa pasta.
 - `Referencias/`: referências visuais para continuar o trabalho artístico.
 
 Atualize o documento de continuidade quando o estado do jogo mudar. O histórico do Git registra as alterações de cada versão.
@@ -63,6 +67,7 @@ Com o executável do Godot disponível como `godot` no terminal:
 ```sh
 godot --headless --editor --path AEspadaDeOda --import --quit
 godot --headless --path AEspadaDeOda --script res://tests/smoke_test.gd
+godot --headless --path AEspadaDeOda --script res://tests/intro_test.gd
 ```
 
 Para exportar, instale os modelos de exportação da mesma versão do Godot e use o preset **Windows Desktop**. Crie a pasta `Windows` na raiz do repositório antes de usar o caminho de saída padrão. Builds não são versionadas; podem ser distribuídas separadamente por GitHub Releases.
