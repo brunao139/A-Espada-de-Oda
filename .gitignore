@@ -1,0 +1,21 @@
+# Caches e configurações locais do Godot
+.godot/
+.godot-test/
+.export/
+export_credentials.cfg
+
+# Builds e pacotes de distribuição
+/Windows/
+/build/
+/dist/
+*.exe
+*.pck
+*.zip
+
+# Arquivos locais e credenciais
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+*.log
