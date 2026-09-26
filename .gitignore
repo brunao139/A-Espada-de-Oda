@@ -11,6 +11,8 @@ export_credentials.cfg
 *.exe
 *.pck
 *.zip
+*.avi
+*.mp4
 
 # Arquivos locais e credenciais
 .DS_Store

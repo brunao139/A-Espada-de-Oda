@@ -4,7 +4,23 @@ Criada em 26/09/2026. Referência de linguagem: aberturas 16-bit de Super Ninten
 
 `japan.png` e `future.png` foram gerados com a ferramenta integrada de geração de imagens, em modo padrão, para compor cenários laterais em pixel art. As imagens fornecidas pelo usuário orientaram arquitetura, cores e atmosfera. A imagem futurista vertical foi reinterpretada em panorama horizontal. As referências originais não são dependências de execução.
 
-O personagem reutiliza o atlas e o alinhamento existentes. O script da abertura desenha telhados, silhuetas, poeira, paralaxe, linhas de CRT e uma única transição luminosa gradual. Não há áudio.
+A abertura entregue é um vídeo pré-renderizado, não uma cena animada em tempo real. `intro.ogv` é reproduzido por VideoStreamPlayer e fica embutido no executável Windows. `title_frame.png` é o último quadro decodificado do vídeo, mantido após o fim enquanto o jogador não inicia a fase. Não há áudio.
+
+A montagem de produção em `tools/intro_source.tscn` reutiliza o atlas e o alinhamento do personagem, e desenha telhados, silhuetas, poeira, paralaxe, linhas de CRT e uma única transição luminosa gradual. A pasta `tools` é excluída da exportação.
+
+## Gerar novamente
+
+Formato final: Ogg Theora, 1280×720, 30 FPS, 13 segundos, qualidade 8, GOP 64, YUV420p. O arquivo atual tem 15.130.288 bytes. Ogg Theora é o formato de vídeo nativo do Godot: https://docs.godotengine.org/en/stable/tutorials/animation/playing_videos.html.
+
+Com Godot e FFmpeg no PATH, execute a partir da raiz do repositório. Crie antes uma pasta de trabalho externa ao projeto para o AVI intermediário.
+
+```sh
+godot --path AEspadaDeOda --scene res://tools/intro_source.tscn --write-movie /caminho/intro-master.avi --fixed-fps 30 --quit-after 390 --disable-vsync --audio-driver Dummy
+ffmpeg -i /caminho/intro-master.avi -an -c:v libtheora -q:v 8 -g:v 64 -pix_fmt yuv420p AEspadaDeOda/assets/intro/intro.ogv
+ffmpeg -sseof -0.04 -i AEspadaDeOda/assets/intro/intro.ogv -frames:v 1 AEspadaDeOda/assets/intro/title_frame.png
+```
+
+Uma cópia MP4 para assistir fora do jogo pode ser gerada com `-an -c:v libx264 -crf 18 -pix_fmt yuv420p -movflags +faststart`. O jogo utiliza o OGV, e não o MP4. AVI intermediário e builds ficam fora do Git.
 
 ## Prompts finais
 
@@ -22,6 +38,6 @@ Press Start 2P, de CodeMan38, distribuída sob SIL Open Font License 1.1. Fonte 
 
 ## Ajustes futuros
 
-- Linha do tempo: constantes no início de `scripts/intro.gd`.
-- Logo: substituir o Label `GameTitle` em `_build_title()` por uma textura quando a arte original estiver disponível.
+- Linha do tempo: constantes no início de `tools/intro_source.gd`.
+- Logo: substituir o Label `GameTitle` em `_build_title()` da montagem de produção por uma textura e renderizar novamente quando a arte original estiver disponível.
 - A fase jogável e a cidade de teste mantêm seus recursos e lógica anteriores.

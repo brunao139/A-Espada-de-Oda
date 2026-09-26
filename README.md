@@ -14,7 +14,7 @@ Protótipo 2D de ação e plataforma baseado no mangá autoral A Espada de Oda, 
 3. No Godot, importe `AEspadaDeOda/project.godot`.
 4. Aguarde a importação das imagens e pressione **F5**.
 
-O jogo começa com uma abertura de aproximadamente 12 segundos: Youkai corre pelo Japão, atravessa uma transição de luz para uma cidade futurista e salta de um prédio antes da tela de título. Pressione qualquer tecla, botão do controle ou clique para iniciar a primeira fase; também é possível iniciar durante a abertura. Solte o botão para concluir a transição. O título é provisório e poderá receber o logo original depois.
+O jogo começa com um **vídeo pré-renderizado de 13 segundos**, incluído no executável: Youkai corre pelo Japão, atravessa uma transição de luz para uma cidade futurista e salta de um prédio antes da tela de título. Ao terminar, o último quadro permanece aguardando o jogador. Pressione qualquer tecla, botão do controle ou clique para iniciar a primeira fase; também é possível iniciar durante o vídeo. Solte o botão para concluir a transição. O título é provisório e poderá receber o logo original depois. O vídeo ainda não tem áudio.
 
 O editor, os modelos de exportação e os executáveis do jogo não fazem parte do repositório. A pasta `.godot` será recriada automaticamente. Os arquivos `.uid` e `.import` são versionados e devem ser preservados.
 
@@ -54,8 +54,10 @@ Leia [CONTINUAR_A_ESPADA_DE_ODA.md](CONTINUAR_A_ESPADA_DE_ODA.md) antes de alter
 - `AEspadaDeOda/scripts/`: movimento, combate, interface e efeitos.
 - `AEspadaDeOda/assets/`: artes utilizadas no jogo e documentação visual.
 - `AEspadaDeOda/tests/`: testes de regressão e verificação.
-- `AEspadaDeOda/scenes/intro.tscn` e `scripts/intro.gd`: abertura e tela de título, separadas da física e combate.
-- `AEspadaDeOda/assets/intro/`: dois cenários em pixel art, fonte e licença; veja `INTRO.md` nessa pasta.
+- `AEspadaDeOda/scenes/intro.tscn` e `scripts/intro.gd`: reprodução do vídeo e entrada na fase, separadas da física e combate.
+- `AEspadaDeOda/assets/intro/intro.ogv`: vídeo final embutido na exportação; `title_frame.png` mantém a tela final.
+- `AEspadaDeOda/tools/intro_source.tscn`: montagem editável usada para renderizar o vídeo; não é executada nem incluída no build.
+- `AEspadaDeOda/assets/intro/`: cenários em pixel art, fonte e licença; veja `INTRO.md` nessa pasta para regenerar o vídeo.
 - `Referencias/`: referências visuais para continuar o trabalho artístico.
 
 Atualize o documento de continuidade quando o estado do jogo mudar. O histórico do Git registra as alterações de cada versão.

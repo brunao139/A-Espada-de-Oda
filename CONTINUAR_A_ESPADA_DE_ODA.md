@@ -5,12 +5,13 @@ Atualizado em 26/09/2026. Versão do projeto: **0.1.3**, agora com introdução.
 ## Nova introdução — 26/09/2026
 
 - Repositório: https://github.com/brunao139/A-Espada-de-Oda. Use a cópia Git atualizada para continuar; o pacote ZIP original de transferência é anterior à introdução.
-- `scenes/intro.tscn` é a cena inicial. A sequência dura cerca de 12 segundos: Youkai corre da direita para a esquerda no Japão, um clarão ciano cobre a troca para o futuro, ele continua no mesmo sentido e salta da borda esquerda de um prédio. O título provisório aparece com a frase “Aperte qualquer botão para iniciar”.
+- O usuário esclareceu que a abertura deve ser um **vídeo pré-renderizado dentro do executável**, não uma animação em tempo real. `scenes/intro.tscn` reproduz `assets/intro/intro.ogv` com VideoStreamPlayer. O arquivo tem 13 segundos, 1280×720, 30 FPS, sem áudio. Não necessita internet, arquivo externo ou player instalado.
+- No vídeo, Youkai corre da direita para a esquerda no Japão, um clarão ciano cobre a troca para o futuro, ele continua no mesmo sentido e salta da borda esquerda de um prédio. O título provisório aparece com a frase “Aperte qualquer botão para iniciar”. No fim, `title_frame.png` mantém o último quadro aguardando entrada.
 - Qualquer tecla, botão do controle, clique ou toque inicia a fase, inclusive durante a abertura. A transição aguarda a soltura do comando inicial para evitar ataque ou salto involuntário na fase. Movimento do mouse, analógico e repetição automática de tecla não iniciam.
-- `scripts/intro.gd` controla a linha do tempo, paralaxe, luz, título e troca de cena. O ator reutiliza as animações existentes com física e colisões desligadas; nenhum arquivo de movimento, combate ou correção da espada foi modificado.
+- `scripts/intro.gd` controla apenas reprodução, espera por entrada e troca de cena. A montagem cinematográfica fica em `tools/intro_source.tscn` e `tools/intro_source.gd`, para futuras renderizações. Essa montagem não roda durante a abertura e é excluída da exportação. Nenhum arquivo de movimento, combate ou correção da espada foi modificado.
 - Os cenários novos estão em `assets/intro/japan.png` e `future.png`. Foram gerados em pixel art a partir da direção visual das duas referências do usuário. `assets/intro/INTRO.md` registra os prompts e a fonte Press Start 2P, distribuída com licença OFL.
-- Para substituir pelo logo futuro, altere a criação do título em `_build_title()`, preservando o prompt e o fluxo de entrada. Ainda não há áudio na abertura.
-- `tests/intro_test.gd`: 16 verificações de fluxo/entrada, mais 6 capturas opcionais em execução gráfica. Os 34 testes anteriores de movimento/combate continuam passando no Godot 4.7.2. A aprovação artística permanece a cargo do usuário.
+- Para substituir pelo logo futuro, altere `_build_title()` em `tools/intro_source.gd` e gere novamente o vídeo e seu quadro final; o procedimento está em `assets/intro/INTRO.md`.
+- `tests/intro_test.gd` executa `video_intro_test.gd`: 14 verificações de reprodução real, fim do vídeo, entrada e reinício, mais 2 capturas opcionais. `tests/intro_source_test.gd` preserva as verificações da montagem cinematográfica editável. Os 34 testes anteriores de movimento/combate foram preservados. A aprovação artística permanece a cargo do usuário.
 
 ## Visão do jogo
 
