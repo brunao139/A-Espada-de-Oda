@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/intro.gd" id="1"]
-[ext_resource type="VideoStream" path="res://assets/intro/intro.ogv" id="2"]
-[ext_resource type="Texture2D" path="res://assets/intro/title_frame.png" id="3"]
+[ext_resource type="VideoStream" path="res://assets/intro_anime/opening.ogv" id="2"]
 
 [node name="Intro" type="Control"]
 layout_mode = 3
@@ -34,19 +33,6 @@ grow_vertical = 2
 mouse_filter = 2
 stream = ExtResource("2")
 expand = true
-
-[node name="TitleFrame" type="TextureRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("3")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Fade" type="ColorRect" parent="."]
 layout_mode = 1

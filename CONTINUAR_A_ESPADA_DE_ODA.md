@@ -1,23 +1,24 @@
 # A Espada de Oda — resumo para continuar em outro chat
 
-Atualizado em 26/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
+Atualizado em 27/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
 
-## Nova introdução — 26/09/2026
+## Nova abertura anime — 27/09/2026
 
-- Repositório: https://github.com/brunao139/A-Espada-de-Oda. Use a cópia Git atualizada para continuar; o pacote ZIP original de transferência é anterior à introdução.
-- O usuário esclareceu que a abertura deve ser um **vídeo pré-renderizado dentro do executável**, não uma animação em tempo real. `scenes/intro.tscn` reproduz `assets/intro/intro.ogv` com VideoStreamPlayer. O arquivo tem 13 segundos, 1280×720, 30 FPS, sem áudio. Não necessita internet, arquivo externo ou player instalado.
-- No vídeo, Youkai corre da direita para a esquerda no Japão, um clarão ciano cobre a troca para o futuro, ele continua no mesmo sentido e salta da borda esquerda de um prédio. O título provisório aparece com a frase “Aperte qualquer botão para iniciar”. No fim, `title_frame.png` mantém o último quadro aguardando entrada.
-- Qualquer tecla, botão do controle, clique ou toque inicia a fase, inclusive durante a abertura. A transição aguarda a soltura do comando inicial para evitar ataque ou salto involuntário na fase. Movimento do mouse, analógico e repetição automática de tecla não iniciam.
-- `scripts/intro.gd` controla apenas reprodução, espera por entrada e troca de cena. A montagem cinematográfica fica em `tools/intro_source.tscn` e `tools/intro_source.gd`, para futuras renderizações. Essa montagem não roda durante a abertura e é excluída da exportação. Nenhum arquivo de movimento, combate ou correção da espada foi modificado.
-- Os cenários novos estão em `assets/intro/japan.png` e `future.png`. Foram gerados em pixel art a partir da direção visual das duas referências do usuário. `assets/intro/INTRO.md` registra os prompts e a fonte Press Start 2P, distribuída com licença OFL.
-- Para substituir pelo logo futuro, altere `_build_title()` em `tools/intro_source.gd` e gere novamente o vídeo e seu quadro final; o procedimento está em `assets/intro/INTRO.md`.
-- `tests/intro_test.gd` executa `video_intro_test.gd`: 14 verificações de reprodução real, fim do vídeo, entrada e reinício, mais 2 capturas opcionais. `tests/intro_source_test.gd` preserva as verificações da montagem cinematográfica editável. Os 34 testes anteriores de movimento/combate foram preservados. A aprovação artística permanece a cargo do usuário.
+- O usuário descartou Runway. A versão atual é um vídeo pré-renderizado de 30 segundos, 1280×720, 30 FPS, com áudio estéreo. Produção local com ilustrações anime, poses de corrida, câmera e efeitos: animação limitada/montagem cinematográfica, não animação integral de estúdio.
+- Youkai corre da direita para a esquerda no Japão feudal noturno, atravessa um portal, continua na cidade futurista chuvosa, salta entre prédios em câmera lenta, prepara a espada com aura e desfere um golpe na direção da lente. O clarão revela o título provisório; o logo oficial não foi fornecido.
+- scenes/intro.tscn reproduz assets/intro_anime/opening.ogv (Theora/Vorbis), incluído no executável. Sem internet ou player externo. Ao terminar abre scenes/main_menu.tscn.
+- Qualquer tecla, botão de controle, clique ou toque pula para o menu, aguardando soltar a entrada. Movimento do mouse, eixo analógico e repetição de tecla não pulam.
+- Menu real: START abre movement_lab.tscn; OPTIONS ajusta volume e tela cheia, persistidos em user://settings.cfg; EXIT fecha o jogo.
+- Fontes de produção: tools/anime_source.gd/.tscn, tools/compose_anime.py, PNGs e prompts em assets/intro_anime/. Trilha instrumental original programada e renderizada com timbres GeneralUser GS. Licenças da fonte Cinzel e dos timbres incluídas. Procedimento completo: assets/intro_anime/DIRECAO.md.
+- A montagem não roda durante o jogo. O executável exclui ferramentas, artes usadas apenas na renderização e a abertura anterior. Os arquivos anteriores permanecem no projeto e no histórico Git.
+- Nenhum arquivo de movimento, combate, pulo ou correção da espada foi alterado. A área jogável continua sendo protótipo.
+- tests/video_intro_test.gd cobre filme completo, decodificação, menu, START, reinício e pular por teclado/controle/mouse; tests/menu_test.gd verifica opções e EXIT; tests/regression.gd preserva os 34 testes de gameplay. Aprovação artística permanece a cargo do usuário.
 
 ## Visão do jogo
 
 Jogo 2D de ação e plataforma inspirado na agilidade dos jogos de ninja clássicos e em Ninja Gaiden Ragebound, baseado no mangá autoral do usuário, A Espada de Oda. Protagonista: Youkai. A aparência atual usa armadura dourada, roupa escura, capacete com hastes em V e olhos ciano. As ilustrações originais do usuário estão na pasta Referencias do pacote; há também uma versão azul/prateada do personagem.
 
-A cidade futurista segue a referência fornecida: lua turquesa, prédios azuis, iluminação ciano e céu violeta. Existe uma área jogável de teste com plataformas, câmera e paralaxe. Ainda não há inimigos, vida, objetivos, som ou condição de vitória. Não tratar este protótipo como uma fase finalizada.
+A cidade futurista segue a referência fornecida: lua turquesa, prédios azuis, iluminação ciano e céu violeta. Existe uma área jogável de teste com plataformas, câmera e paralaxe. Ainda não há inimigos, vida, objetivos, áudio de gameplay ou condição de vitória. Não tratar este protótipo como uma fase finalizada.
 
 ## Versão e abertura
 
@@ -92,7 +93,8 @@ A versão foi validada com execução gráfica e 34 verificações automáticas 
 
 ```text
 godot --headless --path <pasta-AEspadaDeOda> --script res://tests/smoke_test.gd
-godot --headless --path <pasta-AEspadaDeOda> --script res://tests/intro_test.gd
+godot --path <pasta-AEspadaDeOda> --script res://tests/intro_test.gd
+godot --path <pasta-AEspadaDeOda> --script res://tests/menu_test.gd
 ```
 
 Aqui `godot` representa o executável do Godot instalado no novo computador. Para importar pela linha de comando:

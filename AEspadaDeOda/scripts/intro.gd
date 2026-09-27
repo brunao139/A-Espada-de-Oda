@@ -1,29 +1,37 @@
 extends Control
 ## Reproduz o vídeo pré-renderizado incluído no pacote do jogo.
-## A montagem editável em tools/intro_source.tscn não roda na abertura.
+## A montagem editável em tools/anime_source.tscn não roda na abertura.
 
-const LEVEL := "res://scenes/movement_lab.tscn"
+const MENU := "res://scenes/main_menu.tscn"
 var starting := false
 var fade_time := 0.0
 var start_released := false
 var start_event: InputEvent
 var changing_scene := false
-var title_ready := false
+
 
 @onready var video: VideoStreamPlayer = $Video
-@onready var title_frame: TextureRect = $TitleFrame
+
 @onready var fade: ColorRect = $Fade
 
 func _ready() -> void:
-	video.finished.connect(_show_title)
+	# Respeita as opções salvas já na reprodução da abertura.
+	var config := ConfigFile.new()
+	var volume := 0.8
+	if config.load("user://settings.cfg") == OK:
+		volume = clampf(float(config.get_value("audio", "volume", 0.8)), 0.0, 1.0)
+		if DisplayServer.get_name() != "headless":
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if bool(config.get_value("display", "fullscreen", false)) else DisplayServer.WINDOW_MODE_WINDOWED)
+	AudioServer.set_bus_mute(0, volume <= 0.0)
+	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.001)))
+	video.finished.connect(_video_finished)
 	video.play()
 
-func _show_title() -> void:
-	# Mantém o último quadro até iniciar, sem repetir o filme.
-	title_ready = true
-	title_frame.show()
-	video.hide()
-	video.stop()
+func _video_finished() -> void:
+	if changing_scene or starting:
+		return
+	changing_scene = true
+	call_deferred("_enter_menu")
 
 func _process(delta: float) -> void:
 	if not starting:
@@ -32,7 +40,7 @@ func _process(delta: float) -> void:
 	fade.color.a = minf(fade_time / 0.4, 1.0)
 	if fade_time >= 0.4 and start_released and not changing_scene:
 		changing_scene = true
-		call_deferred("_enter_level")
+		call_deferred("_enter_menu")
 
 func _input(event: InputEvent) -> void:
 	if starting:
@@ -70,12 +78,12 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and starting:
 		start_released = true
 
-func _enter_level() -> void:
-	var result := get_tree().change_scene_to_file(LEVEL)
+func _enter_menu() -> void:
+	var result := get_tree().change_scene_to_file(MENU)
 	if result != OK:
-		push_error("Não foi possível abrir a primeira fase: %s" % error_string(result))
+		push_error("Não foi possível abrir o menu: %s" % error_string(result))
 		starting = false
 		changing_scene = false
 		fade_time = 0.0
 		fade.color.a = 0.0
-		_show_title()
+		video.play()
