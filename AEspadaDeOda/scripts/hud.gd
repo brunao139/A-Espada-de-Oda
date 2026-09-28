@@ -25,7 +25,7 @@ func _draw() -> void:
 	_control(42, "A  D", "CORRER", "ou setas", "move_left", "move_right")
 	_control(264, "ESPAÇO", "PULAR", "segure para ir mais alto", "jump")
 	_control(567, "J / Z", "GF-1 → GF-2", "kung-fu + giro esquerdo", "light_attack")
-	_control(858, "K / X", "GFF-1 → GFF-2", "descendente + ascendente", "heavy_attack")
+	_control(858, "K / X", "GFF-1 → GFF-2", "descendente + frontal", "heavy_attack")
 	if is_instance_valid(player):
 		draw_style_box(_status_style(), Rect2(36, 121, 280, 79))
 		text(Vector2(54, 145), player.state_label(), 16, gold)

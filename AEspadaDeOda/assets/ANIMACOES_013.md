@@ -1,5 +1,7 @@
 # Animações 0.1.3 — GF e GFF
 
+**Atualização 28/09/2026:** GFF-2 substituído por estocada frontal com 16 poses novas. Ver [GFF2_FRONTAL.md](gff/GFF2_FRONTAL.md). A descrição e o prompt ascendente abaixo documentam a versão anterior.
+
 Os novos PNGs foram criados com a ferramenta integrada de geração de imagens, usando os atlas anteriores de Youkai como referência. Os recortes, pivôs, escala e limiares de transparência foram revisados no Godot.
 
 - GF-1: soco + chute, quadros da quarta linha de `youkai_atlas.png`.

@@ -2,6 +2,17 @@
 
 Atualizado em 28/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
 
+## GFF-2 frontal — 28/09/2026
+
+- Pedido atual substitui explicitamente o corte ascendente por uma estocada de espada para a frente.
+- 16 poses novas em assets/gff/gff2_forward_a.png e gff2_forward_b.png; mais a pose inicial idêntica ao final do GFF-1: 17 quadros em 0,68 s (25 quadros por segundo).
+- scripts/gff2_frames.gd define recortes medidos, escala e pivô da bota da frente. As divisões não coincidem com uma grade uniforme; não substituir pelos recortes automáticos antigos.
+- Dano entre 0,24 e 0,44 s; caixa frontal 144 × 64, centro (±106, -98). Dano 3, uma vez por alvo. Rastro horizontal acompanha a estocada.
+- GFF-1 mantém velocidade 1,2×, final baixo e ligação exata. GF-1/GF-2, dois giros no salto e beiradas permanecem.
+- tests/gff2_test.gd cobre alvos reais à frente, atrás e acima, ambos os lados, todos os quadros e término do dano. tools/gff2_demo.tscn demonstra o combo e uma repetição lenta.
+- Arte e prompts: assets/gff/GFF2_FRONTAL.md. Atlas ascendente antigo preservado como histórico, sem uso no GFF-2 atual.
+- A nova abertura por IA está em espera a pedido do usuário, sem gastos; conservar a abertura anime já integrada.
+
 ## Movimento de beirada — 28/09/2026
 
 - Nova mecânica: agarrar quina automaticamente durante a descida do salto, ficar pendurado e subir com Espaço/W/↑. Soltar com S/↓. Se o pulo já estava segurado ao agarrar, é necessário soltar e apertar novamente para subir.
@@ -61,7 +72,7 @@ O usuário pediu mais agilidade e movimentos naturais. A versão 0.1.3 implement
 2. **GF-1:** sequência já existente de soco e chute de kung-fu. Um toque executa os dois movimentos, com duas janelas distintas de impacto.
 3. **GF-2:** oito poses novas para chute giratório com a perna esquerda, apoio da direita, rotação com vista de costas, extensão, recolhimento e retorno à guarda. Vem após GF-1.
 4. **GFF-1:** corte de cima para baixo acelerado exatamente 1,2×. Duração de 0,56 / 1,2 segundos. Termina na pose baixa e pode mantê-la por até 0,5 segundo, parado, aguardando continuação.
-5. **GFF-2:** corte ascendente com oito poses novas de giro dos punhos, preparação da lâmina e corte de baixo para cima. A primeira pose usa exatamente a mesma textura e posição final de GFF-1, para continuidade. Não é simplesmente GFF-1 reproduzido ao contrário.
+5. **GFF-2:** estocada frontal com 16 poses novas de preparação, extensão e recuperação (atualização de 28/09). A primeira pose usa exatamente a mesma textura e posição final de GFF-1, para continuidade.
 
 Um segundo toque do mesmo tipo de ataque, após aproximadamente 45% do primeiro movimento, pode ficar na fila e emendar o segundo. Segurar o botão não repete automaticamente. Pausa ou troca de tipo reinicia a sequência. No chão, ataques desaceleram o personagem. Durante os cortes de espada não se inicia outro salto.
 
@@ -80,7 +91,7 @@ O usuário ainda deve avaliar o resultado visual e indicar o próximo ajuste. N�
 - `assets/youkai_atlas.png`: locomoção e GF-1.
 - `assets/youkai_sword_v2.png`: corte descendente.
 - `assets/gf/gf2_spin_kick.png`: novas poses do chute giratório.
-- `assets/gff/gff2_rising_cut.png`: novas poses do corte ascendente.
+- `assets/gff/gff2_rising_cut.png`: atlas ascendente anterior; substituído por gff2_forward_a.png e gff2_forward_b.png.
 - `assets/cidade_futurista.png`: fundo da cidade.
 - `assets/ANIMACOES_013.md`, `DIRECAO_DE_ARTE.md` e `CORRECAO_ESPADA.md`: decisões de arte, prompts e correções anteriores.
 - `tests/regression.gd` e `tests/smoke_test.gd`: verificações automáticas.
@@ -89,9 +100,9 @@ O usuário ainda deve avaliar o resultado visual e indicar o próximo ajuste. N�
 ## Cuidados para não reintroduzir bugs
 
 - Houve um bug no golpe forte: efeito cortado e fragmento de outro quadro. Foram utilizados sprites dedicados, margens de recorte e rastro separado. Não voltar ao recorte ingênuo de uma grade uniforme.
-- As artes de GF-2 e GFF-2 têm margens personalizadas e alinhamento por quadro. O recorte superior/inferior do GFF-2 evita cortar a ponta da espada e capturar a linha vizinha.
+- As artes de GF-2 e GFF-2 têm margens personalizadas e alinhamento por quadro. O GFF-2 frontal tem recortes explícitos em gff2_frames.gd para preservar espada e evitar fragmentos vizinhos.
 - O material das novas poses usa limiar de transparência 0,10 para preservar a lâmina ciano semitransparente. O material antigo usa 0,80. Aumentar indiscriminadamente esse limiar pode amputar a espada.
-- Manter a conexão exata entre a última pose de GFF-1 e a primeira de GFF-2. Não substituir o golpe ascendente por quadros invertidos do descendente.
+- Manter a conexão exata entre a última pose de GFF-1 e a primeira de GFF-2. O novo golpe frontal usa arte própria, não quadros invertidos do descendente.
 - Sincronizar janela de dano, rastro e animação quando mudar a velocidade de um ataque.
 - Rotacionar o visual no pulo, não a colisão do personagem.
 

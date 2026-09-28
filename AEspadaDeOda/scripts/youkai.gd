@@ -43,10 +43,11 @@ var sword_material: ShaderMaterial
 var new_attack_material: ShaderMaterial
 var new_frame_positions: Dictionary = {}
 var new_frame_scales: Dictionary = {}
+var forward_blade_tips: Array[Vector2] = []
 var hit_phase: int = -1
 var held_finish: String = ""
 const GFF1_SPEED: float = 1.2
-const ATTACK_DURATION := {"gf1": 0.55, "gf2": 0.58, "gff1": 0.56 / GFF1_SPEED, "gff2": 0.58}
+const ATTACK_DURATION := {"gf1": 0.55, "gf2": 0.58, "gff1": 0.56 / GFF1_SPEED, "gff2": 0.68}
 
 @onready var ledge: Node = $Ledge
 @onready var sprite: AnimatedSprite2D = $Visual/Sprite
@@ -128,7 +129,10 @@ func _build_animations() -> void:
 	# GFF-1 termina baixo: GFF-2 começa exatamente com a mesma textura e pivô.
 	frames.set_frame("gff1", 5, frames.get_frame_texture("gff1", 4))
 	_add_new_attack(frames, "gf2", "res://assets/gf/gf2_spin_kick.png", 0, 176.0)
-	_add_new_attack(frames, "gff2", "res://assets/gff/gff2_rising_cut.png", 7, 174.0, frames.get_frame_texture("gff1", 5))
+	var forward: Dictionary = preload("res://scripts/gff2_frames.gd").build(frames, frames.get_frame_texture("gff1", 5))
+	new_frame_positions["gff2"] = forward.positions
+	new_frame_scales["gff2"] = forward.scales
+	forward_blade_tips = forward.tips
 	sprite.sprite_frames = frames
 	# Quadros de 192 unidades: o desenho tem cerca de 176 unidades de altura.
 	normal_sprite_scale = Vector2(192.0 / cell.x, 192.0 / cell.y)
@@ -324,7 +328,7 @@ func attack_windows() -> Array[Vector2]:
 		"gf1": return [Vector2(0.07, 0.17), Vector2(0.33, 0.47)]
 		"gf2": return [Vector2(0.28, 0.44)]
 		"gff1": return [Vector2(0.18, 0.39) / GFF1_SPEED]
-		"gff2": return [Vector2(0.24, 0.45)]
+		"gff2": return [Vector2(0.24, 0.44)]
 	return []
 
 func _update_attack(delta: float) -> void:
@@ -347,8 +351,8 @@ func _update_attack(delta: float) -> void:
 				_start_attack(pending)
 	var box := attack_shape.shape as RectangleShape2D
 	if action == "gff2":
-		box.size = Vector2(110, 178)
-		attack_area.position = Vector2(facing * 66, -110)
+		box.size = Vector2(144, 64)
+		attack_area.position = Vector2(facing * 106, -98)
 	elif action == "gf2":
 		box.size = Vector2(120, 68)
 		attack_area.position = Vector2(facing * 61, -96)
@@ -427,7 +431,7 @@ func state_label() -> String:
 	if action == "gf1": return "GF-1 / SOCO + CHUTE"
 	if action == "gf2": return "GF-2 / CHUTE GIRATÓRIO"
 	if action == "gff1": return "GFF-1 / DESCENDENTE"
-	if action == "gff2": return "GFF-2 / ASCENDENTE"
+	if action == "gff2": return "GFF-2 / FRONTAL"
 	if sprite.animation == "somersault": return "SALTO / GIRO DUPLO"
 	if not is_on_floor(): return "SALTO / SUBINDO" if velocity.y < 0 else "SALTO / DESCENDO"
 	return "CORRIDA" if absf(velocity.x) > 25 else "EM GUARDA"

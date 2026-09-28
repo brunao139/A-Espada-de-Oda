@@ -83,3 +83,7 @@ godot --path AEspadaDeOda --script res://tests/menu_test.gd
 ```
 
 Para exportar, instale os modelos de exportação da mesma versão do Godot e use o preset **Windows Desktop**. Crie a pasta `Windows` na raiz do repositório antes de usar o caminho de saída padrão. Builds não são versionadas; podem ser distribuídas separadamente por GitHub Releases.
+
+## Atualização GFF-2 frontal — 28/09/2026
+
+O segundo golpe forte agora projeta a katana para a frente, com 16 poses novas mais a ligação com GFF-1 (17 quadros, 0,68 s). Use K ou X duas vezes para emendar. Dano e rastro acompanham a extensão horizontal, nos dois sentidos. Detalhes em AEspadaDeOda/assets/gff/GFF2_FRONTAL.md.
