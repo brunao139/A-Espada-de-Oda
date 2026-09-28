@@ -1,6 +1,16 @@
 # A Espada de Oda — resumo para continuar em outro chat
 
-Atualizado em 27/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
+Atualizado em 28/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
+
+## Movimento de beirada — 28/09/2026
+
+- Nova mecânica: agarrar quina automaticamente durante a descida do salto, ficar pendurado e subir com Espaço/W/↑. Soltar com S/↓. Se o pulo já estava segurado ao agarrar, é necessário soltar e apertar novamente para subir.
+- Funciona nos dois lados de plataformas sólidas estáticas com espaço para o corpo pendurar. Subida dura 0,64 s; a cápsula continua ativa. Verifica topo, espaço para os pés, teto e percurso. Segurar para baixo e um intervalo após soltar evitam reagarrar imediatamente.
+- O pulo normal ainda completa dois giros. Golpes ativos não são cancelados por agarrar; enquanto pendurado/subindo não se ataca nem se enfileira combo. As correções de espada e as sequências GF/GFF permanecem.
+- scripts/ledge_controller.gd, assets/ledge/youkai_ledge.png (oito poses) e assets/ledge/BEIRADAS.md documentam a implementação e o prompt. youkai.gd contém os pontos de integração; hud.gd mostra as instruções.
+- Plataforma TESTE DE BEIRADA adicionada no fim da fase: x=2170–2410, topo y=330. As plataformas originais foram mantidas. Plataformas muito baixas podem não ter espaço para pendurar o corpo; StepTwo e a nova plataforma permitem testar.
+- tests/ledge_test.gd: 29 verificações; tests/regression.gd: 34 verificações anteriores. Ambos passaram. tools/ledge_demo.tscn grava uma demonstração com entradas reais.
+- Plataformas móveis/inclinadas não são suportadas nesta primeira implementação. Abertura anime e menu permanecem.
 
 ## Nova abertura anime — 27/09/2026
 
@@ -36,6 +46,8 @@ A cidade futurista segue a referência fornecida: lua turquesa, prédios azuis, 
 |---|---|
 | A/D ou setas esquerda/direita | Correr |
 | Espaço, W ou seta para cima | Pular; segurar aumenta a altura, soltar cedo encurta |
+| Espaço, W ou ↑ na beirada | Subir; solte o pulo anterior e aperte novamente |
+| S ou ↓ | Soltar a beirada; segurar impede agarrar |
 | J ou Z | GF-1; novo toque emenda GF-2 |
 | K ou X | GFF-1; novo toque emenda GFF-2 |
 | R | Reiniciar o trecho |
@@ -93,6 +105,7 @@ A versão foi validada com execução gráfica e 34 verificações automáticas 
 
 ```text
 godot --headless --path <pasta-AEspadaDeOda> --script res://tests/smoke_test.gd
+godot --headless --path <pasta-AEspadaDeOda> --script res://tests/ledge_test.gd
 godot --path <pasta-AEspadaDeOda> --script res://tests/intro_test.gd
 godot --path <pasta-AEspadaDeOda> --script res://tests/menu_test.gd
 ```

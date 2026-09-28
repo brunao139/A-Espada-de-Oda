@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/youkai.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/sword_trail.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/ledge_controller.gd" id="3"]
 [sub_resource type="CapsuleShape2D" id="Body"]
 radius = 18.0
 height = 166.0
@@ -35,3 +36,6 @@ monitorable = false
 [node name="Shape" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("Attack")
 disabled = true
+
+[node name="Ledge" type="Node" parent="."]
+script = ExtResource("3")

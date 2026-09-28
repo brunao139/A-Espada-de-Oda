@@ -48,6 +48,7 @@ var held_finish: String = ""
 const GFF1_SPEED: float = 1.2
 const ATTACK_DURATION := {"gf1": 0.55, "gf2": 0.58, "gff1": 0.56 / GFF1_SPEED, "gff2": 0.58}
 
+@onready var ledge: Node = $Ledge
 @onready var sprite: AnimatedSprite2D = $Visual/Sprite
 @onready var visual: Node2D = $Visual
 @onready var attack_area: Area2D = $AttackArea
@@ -56,13 +57,14 @@ const ATTACK_DURATION := {"gf1": 0.55, "gf2": 0.58, "gff1": 0.56 / GFF1_SPEED, "
 func _ready() -> void:
 	_install_controls()
 	_build_animations()
+	ledge.setup(self)
 	attack_area.area_entered.connect(_try_hit)
 	attack_area.body_entered.connect(_try_hit)
 
 func _install_controls() -> void:
 	var bindings := {
 		"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT],
-		"jump": [KEY_SPACE, KEY_W, KEY_UP], "light_attack": [KEY_J, KEY_Z],
+		"jump": [KEY_SPACE, KEY_W, KEY_UP], "ledge_drop": [KEY_S, KEY_DOWN], "light_attack": [KEY_J, KEY_Z],
 		"heavy_attack": [KEY_K, KEY_X], "reset_lab": [KEY_R], "debug_hitbox": [KEY_F1]
 	}
 	for name in bindings:
@@ -217,6 +219,9 @@ func _add_animation(frames: SpriteFrames, sheet: Texture2D, cell: Vector2, name:
 
 func _physics_process(delta: float) -> void:
 	animation_clock += delta
+	if ledge.tick(delta):
+		queue_redraw()
+		return
 	var grounded := is_on_floor()
 	coyote_left = coyote_time if grounded else maxf(0.0, coyote_left - delta)
 	jump_buffer = maxf(0.0, jump_buffer - delta)
@@ -268,7 +273,11 @@ func _physics_process(delta: float) -> void:
 	if not grounded or velocity.y < 0:
 		velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
 	visual.scale.x = facing
+	var previous_position := global_position
 	move_and_slide()
+	if ledge.try_grab(previous_position):
+		queue_redraw()
+		return
 	if is_on_floor() and not grounded:
 		landing_left = 0.09
 		jump_spinning = false
@@ -277,6 +286,8 @@ func _physics_process(delta: float) -> void:
 	queue_redraw()
 
 func _request_attack(kind: String) -> void:
+	if ledge.state != "":
+		return
 	if action == "":
 		_start_attack(kind)
 	elif action_time > action_duration * 0.45:
@@ -358,6 +369,9 @@ func _try_hit(target: Node) -> void:
 	target.receive_hit(3 if is_heavy_attack() else 1, facing)
 
 func _update_animation() -> void:
+	if ledge.state != "":
+		ledge.update_visual()
+		return
 	if sprite.sprite_frames == null:
 		return
 	if action != "":
@@ -408,6 +422,8 @@ func _align_sprite() -> void:
 		sprite.position = Vector2(0, -92.0 + float(offsets.get(String(sprite.animation), 0.0)))
 
 func state_label() -> String:
+	if ledge.state == "hang": return "BEIRADA / PENDURADO"
+	if ledge.state == "climb": return "BEIRADA / SUBINDO"
 	if action == "gf1": return "GF-1 / SOCO + CHUTE"
 	if action == "gf2": return "GF-2 / CHUTE GIRATÓRIO"
 	if action == "gff1": return "GFF-1 / DESCENDENTE"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/lab.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/youkai.tscn" id="2"]
@@ -22,6 +22,9 @@ size = Vector2(180, 28)
 
 [sub_resource type="RectangleShape2D" id="Box5"]
 size = Vector2(300, 28)
+
+[sub_resource type="RectangleShape2D" id="LedgePracticeBox"]
+size = Vector2(240, 250)
 
 [node name="MovementLab" type="Node2D"]
 script = ExtResource("1")
@@ -81,6 +84,14 @@ collision_mask = 2
 
 [node name="Shape" type="CollisionShape2D" parent="Geometry/StepThree"]
 shape = SubResource("Box5")
+
+[node name="LedgePractice" type="StaticBody2D" parent="Geometry"]
+position = Vector2(2290, 455)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/LedgePractice"]
+shape = SubResource("LedgePracticeBox")
 
 [node name="Youkai" parent="." instance=ExtResource("2")]
 position = Vector2(340, 580)

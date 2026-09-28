@@ -32,6 +32,8 @@ func _draw() -> void:
 			draw_line(rect.position + Vector2(0, 12), rect.position + Vector2(rect.size.x, 12), Color("284455"), 1)
 			for x in range(int(rect.position.x) + 16, int(rect.end.x) - 12, 32):
 				draw_line(Vector2(x, rect.position.y + 17), Vector2(x + 7, rect.position.y + 24), Color("63878a"), 2)
+	draw_string(ThemeDB.fallback_font, Vector2(2188, 373), "TESTE DE BEIRADA", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("ecc77c"))
+	draw_string(ThemeDB.fallback_font, Vector2(2188, 400), "Pule em direção à quina", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color("c2dce3"))
 	for x in range(32, 3000, 40):
 		draw_line(Vector2(x, 596), Vector2(x + 12, 596), Color("75969b"), 2)
 	for x in range(0, 3000, 160):

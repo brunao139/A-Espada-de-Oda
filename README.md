@@ -26,10 +26,14 @@ O editor, os modelos de exportação e os executáveis do jogo não fazem parte 
 |---|---|
 | A/D ou setas laterais | Correr |
 | Espaço, W ou seta para cima | Pular; segurar aumenta a altura |
+| Espaço, W ou ↑ na beirada | Subir; solte o pulo anterior e aperte novamente |
+| S ou ↓ | Soltar a beirada; segurar impede agarrar |
 | J ou Z | GF-1; novo toque emenda GF-2 |
 | K ou X | GFF-1; novo toque emenda GFF-2 |
 | R | Reiniciar o trecho |
 | F1 | Mostrar colisões e alcance dos golpes |
+
+Youkai agarra automaticamente quinas à sua frente durante a descida do salto, desde que haja espaço para ficar pendurado. Uma plataforma sinalizada no fim do trecho permite testar o movimento. A subida respeita colisões e tetos; plataformas móveis não são suportadas. Detalhes em [BEIRADAS.md](AEspadaDeOda/assets/ledge/BEIRADAS.md).
 
 O protótipo tem plataformas, câmera e cidade com paralaxe. Ainda não há inimigos, vida, objetivos, áudio de gameplay ou condição de vitória.
 
@@ -73,6 +77,7 @@ Com o executável do Godot disponível como `godot` no terminal:
 ```sh
 godot --headless --editor --path AEspadaDeOda --import --quit
 godot --headless --path AEspadaDeOda --script res://tests/smoke_test.gd
+godot --headless --path AEspadaDeOda --script res://tests/ledge_test.gd
 godot --path AEspadaDeOda --script res://tests/intro_test.gd
 godot --path AEspadaDeOda --script res://tests/menu_test.gd
 ```

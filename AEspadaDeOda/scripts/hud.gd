@@ -29,7 +29,11 @@ func _draw() -> void:
 	if is_instance_valid(player):
 		draw_style_box(_status_style(), Rect2(36, 121, 280, 79))
 		text(Vector2(54, 145), player.state_label(), 16, gold)
-		text(Vector2(54, 169), "Armadura dourada  •  Youkai", 12, muted)
+		if player.ledge.state != "":
+			text(Vector2(54, 169), "Espaço / W / ↑: subir", 12, paper)
+			text(Vector2(54, 188), "S / ↓: soltar", 12, muted)
+		else:
+			text(Vector2(54, 169), "No ar: aproxime-se da quina", 12, muted)
 		if player.action != "":
 			draw_rect(Rect2(54, 184, 180, 3), Color("263742"))
 			draw_rect(Rect2(54, 184, 180 * minf(1, player.action_time / player.action_duration), 3), gold)
