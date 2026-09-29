@@ -1,6 +1,17 @@
 # A Espada de Oda — resumo para continuar em outro chat
 
-Atualizado em 28/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
+Atualizado em 29/09/2026. Versão do projeto: **0.1.3**, agora com introdução. Este documento registra o estado do trabalho; confirme os arquivos antes de alterar qualquer coisa.
+
+## Cidade expandida e tráfego aéreo — 29/09/2026
+
+- Cenário ampliado de 3.000 para 9.000 unidades, com três trechos (Acesso Oda, Neon, Porto/Terminal 09) e 14 plataformas adicionais.
+- Carro esportivo, táxi, moto esportiva e moto de entrega com pilotos; 14 veículos percorrem o céu nos dois sentidos, em profundidades diferentes. São decoração sem colisão.
+- Trem, chuva fina, letreiros, luminárias, antenas, cabos, fachadas, ventiladores animados e guindaste completam a cidade.
+- lab.gd deriva a largura do piso; câmera e parede final acompanham os novos limites. Fundo cobre toda a extensão com paralaxe contínua.
+- Novos scripts city_environment.gd e city_near_traffic.gd; atlas assets/city/hover_traffic.png. Direção, prompt e validação em assets/city/CIDADE.md.
+- 101 verificações passaram (34 regressão, 29 beiradas, 12 GFF-2 e 26 cenário), incluindo travessia real de toda a expansão.
+- IMPORTANTE: o autor tem novos golpes aéreos salvos somente no outro computador. Os arquivos de combate, Youkai, HUD e beiradas não foram alterados nesta melhoria. Antes de atualizar esse computador, fazer commit dos golpes aéreos e integrar as duas versões. Ler INTEGRAR_COMBOS_AEREOS.md.
+- Abertura nova continua em espera.
 
 ## GFF-2 frontal — 28/09/2026
 

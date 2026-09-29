@@ -1,12 +1,16 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=28 format=3]
 
 [ext_resource type="Script" path="res://scripts/lab.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/youkai.tscn" id="2"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3"]
 [ext_resource type="Script" path="res://scripts/city_backdrop.gd" id="4"]
 
+[ext_resource type="Script" path="res://scripts/city_environment.gd" id="5"]
+
+[ext_resource type="Script" path="res://scripts/city_near_traffic.gd" id="6"]
+
 [sub_resource type="RectangleShape2D" id="Box0"]
-size = Vector2(3000, 88)
+size = Vector2(9000, 88)
 
 [sub_resource type="RectangleShape2D" id="Box1"]
 size = Vector2(60, 720)
@@ -26,6 +30,48 @@ size = Vector2(300, 28)
 [sub_resource type="RectangleShape2D" id="LedgePracticeBox"]
 size = Vector2(240, 250)
 
+[sub_resource type="RectangleShape2D" id="NeonLandingBox"]
+size = Vector2(260, 30)
+
+[sub_resource type="RectangleShape2D" id="NeonLiftBox"]
+size = Vector2(240, 220)
+
+[sub_resource type="RectangleShape2D" id="NeonBridgeBox"]
+size = Vector2(280, 28)
+
+[sub_resource type="RectangleShape2D" id="NeonRoofBox"]
+size = Vector2(300, 250)
+
+[sub_resource type="RectangleShape2D" id="NeonStepsBox"]
+size = Vector2(180, 32)
+
+[sub_resource type="RectangleShape2D" id="NeonCrossBox"]
+size = Vector2(360, 30)
+
+[sub_resource type="RectangleShape2D" id="NeonGateBox"]
+size = Vector2(320, 130)
+
+[sub_resource type="RectangleShape2D" id="PortArrivalBox"]
+size = Vector2(280, 30)
+
+[sub_resource type="RectangleShape2D" id="PortStackBox"]
+size = Vector2(200, 220)
+
+[sub_resource type="RectangleShape2D" id="PortCatwalkBox"]
+size = Vector2(300, 28)
+
+[sub_resource type="RectangleShape2D" id="PortRoofBox"]
+size = Vector2(300, 230)
+
+[sub_resource type="RectangleShape2D" id="PortRailBox"]
+size = Vector2(200, 30)
+
+[sub_resource type="RectangleShape2D" id="PortDeckBox"]
+size = Vector2(320, 225)
+
+[sub_resource type="RectangleShape2D" id="TerminalPadBox"]
+size = Vector2(380, 30)
+
 [node name="MovementLab" type="Node2D"]
 script = ExtResource("1")
 
@@ -38,7 +84,7 @@ script = ExtResource("4")
 [node name="Geometry" type="Node2D" parent="."]
 
 [node name="Floor" type="StaticBody2D" parent="Geometry"]
-position = Vector2(1500, 624)
+position = Vector2(4500, 624)
 collision_layer = 1
 collision_mask = 2
 
@@ -54,7 +100,7 @@ collision_mask = 2
 shape = SubResource("Box1")
 
 [node name="RightWall" type="StaticBody2D" parent="Geometry"]
-position = Vector2(3030, 360)
+position = Vector2(9030, 360)
 collision_layer = 1
 collision_mask = 2
 
@@ -93,13 +139,133 @@ collision_mask = 2
 [node name="Shape" type="CollisionShape2D" parent="Geometry/LedgePractice"]
 shape = SubResource("LedgePracticeBox")
 
+[node name="NeonLanding" type="StaticBody2D" parent="Geometry"]
+position = Vector2(3260, 471.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/NeonLanding"]
+shape = SubResource("NeonLandingBox")
+
+[node name="NeonLift" type="StaticBody2D" parent="Geometry"]
+position = Vector2(3630, 470.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/NeonLift"]
+shape = SubResource("NeonLiftBox")
+
+[node name="NeonBridge" type="StaticBody2D" parent="Geometry"]
+position = Vector2(3990, 280.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/NeonBridge"]
+shape = SubResource("NeonBridgeBox")
+
+[node name="NeonRoof" type="StaticBody2D" parent="Geometry"]
+position = Vector2(4390, 455.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/NeonRoof"]
+shape = SubResource("NeonRoofBox")
+
+[node name="NeonSteps" type="StaticBody2D" parent="Geometry"]
+position = Vector2(4740, 456.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/NeonSteps"]
+shape = SubResource("NeonStepsBox")
+
+[node name="NeonCross" type="StaticBody2D" parent="Geometry"]
+position = Vector2(5140, 365.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/NeonCross"]
+shape = SubResource("NeonCrossBox")
+
+[node name="NeonGate" type="StaticBody2D" parent="Geometry"]
+position = Vector2(5680, 515.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/NeonGate"]
+shape = SubResource("NeonGateBox")
+
+[node name="PortArrival" type="StaticBody2D" parent="Geometry"]
+position = Vector2(6240, 471.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/PortArrival"]
+shape = SubResource("PortArrivalBox")
+
+[node name="PortStack" type="StaticBody2D" parent="Geometry"]
+position = Vector2(6560, 470.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/PortStack"]
+shape = SubResource("PortStackBox")
+
+[node name="PortCatwalk" type="StaticBody2D" parent="Geometry"]
+position = Vector2(6900, 286.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/PortCatwalk"]
+shape = SubResource("PortCatwalkBox")
+
+[node name="PortRoof" type="StaticBody2D" parent="Geometry"]
+position = Vector2(7310, 465.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/PortRoof"]
+shape = SubResource("PortRoofBox")
+
+[node name="PortRail" type="StaticBody2D" parent="Geometry"]
+position = Vector2(7680, 463.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/PortRail"]
+shape = SubResource("PortRailBox")
+
+[node name="PortDeck" type="StaticBody2D" parent="Geometry"]
+position = Vector2(8070, 467.5)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/PortDeck"]
+shape = SubResource("PortDeckBox")
+
+[node name="TerminalPad" type="StaticBody2D" parent="Geometry"]
+position = Vector2(8640, 471.0)
+collision_layer = 1
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Geometry/TerminalPad"]
+shape = SubResource("TerminalPadBox")
+
+[node name="CityDetails" type="Node2D" parent="."]
+z_index = -2
+script = ExtResource("5")
+
+[node name="NearTraffic" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("6")
+
 [node name="Youkai" parent="." instance=ExtResource("2")]
 position = Vector2(340, 580)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 limit_left = 0
-limit_right = 3000
+limit_right = 9000
 limit_top = 0
 limit_bottom = 720
 

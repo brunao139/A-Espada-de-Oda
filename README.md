@@ -87,3 +87,10 @@ Para exportar, instale os modelos de exportação da mesma versão do Godot e us
 ## Atualização GFF-2 frontal — 28/09/2026
 
 O segundo golpe forte agora projeta a katana para a frente, com 16 poses novas mais a ligação com GFF-1 (17 quadros, 0,68 s). Use K ou X duas vezes para emendar. Dano e rastro acompanham a extensão horizontal, nos dois sentidos. Detalhes em AEspadaDeOda/assets/gff/GFF2_FRONTAL.md.
+
+
+## Cidade expandida — 29/09/2026
+
+Fase três vezes mais longa (9.000 unidades), com Acesso Oda, distrito Neon e Porto/Terminal 09. Quatorze plataformas adicionais, carros e motos voadoras com pilotos, trem, letreiros, chuva e equipamentos animados. Os veículos são ambientação.
+
+Detalhes em AEspadaDeOda/assets/city/CIDADE.md. Para integrar os golpes aéreos ainda salvos no outro computador, leia INTEGRAR_COMBOS_AEREOS.md antes de atualizar.
