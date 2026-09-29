@@ -8,7 +8,7 @@ func run() -> void:
 	scene.set_process(false)
 	var hero = scene.get_node("Youkai")
 	hero.set_physics_process(false)
-	var positions := [Vector2(600,580),Vector2(4380,330),Vector2(8640,456)]
+	var positions := [Vector2(600,580),Vector2(4380,580),Vector2(8640,456)]
 	var cameras := [640.0,4420.0,8360.0]
 	var output := OS.get_cmdline_user_args()[0]
 	for i in range(3):

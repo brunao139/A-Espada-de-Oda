@@ -33,10 +33,11 @@ func run() -> void:
 	check(scene.get_node("Geometry/StepOne").position == Vector2(970,466) and scene.get_node("Geometry/LedgePractice").position == Vector2(2290,455),"Plataformas originais preservadas")
 	var city = scene.get_node("Backdrop/City")
 	check(city.vehicles.size() == 4,"Dois carros e duas motos com sprites proprios")
-	var initial: Vector2 = city.traffic_position(10)
+	var initial: Vector2 = city.traffic_position(2)
 	city.elapsed += 1
-	check(city.traffic_position(10).distance_to(initial)>100,"Trafego realmente animado")
-	check(scene.get_node("NearTraffic").z_index > scene.get_node("CityDetails").z_index,"Veiculos proximos visiveis a frente das fachadas")
+	check(city.traffic_position(2).distance_to(initial)>70,"Trafego realmente animado")
+	check(not scene.has_node("NearTraffic") and city.TRAFFIC_COUNT == 10,"Sem trafego proximo; dez veiculos somente no fundo")
+	check(scene.get_node("Geometry").get_child_count()-3 == 8,"Oito plataformas; reducao de 18 para 8")
 	for offset in [0,3000,7720]:
 		city.camera_offset = offset
 		var safe := true

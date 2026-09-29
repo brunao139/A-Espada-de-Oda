@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	var next := mini(2,int(elapsed/4.0))
 	if next != district:
 		district = next
-		var positions := [Vector2(600,580),Vector2(4380,330),Vector2(8640,456)]
+		var positions := [Vector2(600,580),Vector2(4380,580),Vector2(8640,456)]
 		var cameras := [640.0,4420.0,8360.0]
 		scene.youkai.position = positions[district]
 		scene.youkai.velocity = Vector2.ZERO

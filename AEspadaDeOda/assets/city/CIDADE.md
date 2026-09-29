@@ -1,13 +1,13 @@
-# Cidade expandida — 29/09/2026
+# Cidade expandida com visual simplificado — 29/09/2026
 
-A fase passa de 3.000 para 9.000 unidades horizontais, mantendo o início e os obstáculos originais. Três trechos: Acesso Oda, Neon e Porto/Terminal 09. Quatorze plataformas novas formam rotas elevadas; o piso contínuo permite recuperar quedas sem reiniciar.
+A fase passa de 3.000 para 9.000 unidades horizontais, mantendo o início e os obstáculos originais. Três trechos: Acesso Oda, Neon e Porto/Terminal 09. A revisão solicitada pelo autor reduz as plataformas de 18 para oito: quatro originais e quatro adicionais, baixas e espaçadas (NeonLanding, NeonSteps, PortArrival e TerminalPad). O piso contínuo permite recuperar quedas sem reiniciar. Foram removidas dez plataformas da expansão e seus suportes visuais.
 
 ## Vida e direção de arte
 - Quatro sprites originais: carro esportivo, táxi, moto esportiva com piloto e moto de entrega com piloto.
-- Quatorze veículos em circulação, nos dois sentidos, com velocidades, escalas e oscilações diferentes. As motos inclinam suavemente. São elementos de ambientação, sem colisão ou pilotagem.
+- Dez veículos pequenos em circulação apenas no fundo, nos dois sentidos, com velocidades, escalas e oscilações diferentes. As motos inclinam suavemente. São elementos de ambientação, sem colisão ou pilotagem.
 - Fundo em paralaxe com cobertura contínua até o final da fase, torres, janelas iluminadas, balizas, trem de quatro vagões, chuva fina e partículas.
 - Fachadas com dutos, antenas, cabos, letreiros de neon com varredura, luminárias e corrimãos. Plataformas altas recebem painéis e ventiladores giratórios. Guindaste no porto.
-- Tráfego próximo fica à frente das fachadas e atrás do Youkai/plataformas, para preservar leitura e contato com as superfícies.
+- Tráfego em primeiro plano removido completamente: não há mais os quatro veículos grandes nem o nó NearTraffic. A área de jogo fica livre dessa camada móvel.
 - Cyan no acesso, magenta no distrito Neon e âmbar no porto. Detalhes do mundo são limitados ao trecho visível para reduzir desenho fora da câmera.
 - Não foram adicionados inimigos, objetivos, veículos pilotáveis ou áudio de tráfego.
 
@@ -16,12 +16,11 @@ A fase passa de 3.000 para 9.000 unidades horizontais, mantendo o início e os o
 - scripts/lab.gd: limites derivados do piso e acabamento das superfícies.
 - scripts/city_backdrop.gd: fundo, tráfego distante e trem.
 - scripts/city_environment.gd: fachadas, letreiros e instalações.
-- scripts/city_near_traffic.gd: veículos próximos.
 - assets/city/hover_traffic.png: atlas de quatro veículos, transparência real, criado com a ferramenta integrada de geração de imagens.
 
 ## Validação
-101 verificações passaram: regressão 34, beiradas 29, GFF-2 12 e cenário 26.
-O teste de cenário percorre a expansão de x=2860 até x>=8900 por entradas de corrida e salto, valida o topo de cada nova plataforma, a parede final, câmera e movimento do tráfego.
+92 verificações passaram: regressão 34, beiradas 29, GFF-2 12 e cenário 17.
+O teste de cenário percorre a expansão de x=2860 até x>=8900 por entradas de corrida e salto, valida o topo de cada nova plataforma, a parede final, câmera e movimento do tráfego. Também confirma oito plataformas e ausência da camada de tráfego próximo.
 tools/city_demo.tscn mostra os três trechos com cortes de câmera; a mudança de distrito no vídeo é uma apresentação, não teletransporte disponível no jogo.
 tools/city_capture.gd produz as capturas da apresentação.
 

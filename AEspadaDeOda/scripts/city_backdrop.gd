@@ -5,7 +5,7 @@ var elapsed := 0.0
 var city: Texture2D = preload("res://assets/cidade_futurista.png")
 var vehicle_sheet: Texture2D = preload("res://assets/city/hover_traffic.png")
 var vehicles: Array[AtlasTexture] = []
-const TRAFFIC_COUNT := 14
+const TRAFFIC_COUNT := 10
 func _ready() -> void:
 	var image := vehicle_sheet.get_image()
 	var cell := Vector2i(image.get_width()/2,image.get_height()/2)
@@ -21,28 +21,25 @@ func _process(delta: float) -> void:
 	elapsed += delta
 	queue_redraw()
 func traffic_position(index: int) -> Vector2:
-	var near := index >= 10
 	var speed := 58.0+index*8.0
 	var direction := 1.0 if index%2 == 0 else -1.0
-	var x := fposmod(index*227.0 + elapsed*speed*direction-camera_offset*(0.46 if near else 0.20),1880.0)-300.0
+	var x := fposmod(index*227.0 + elapsed*speed*direction-camera_offset*0.20,1880.0)-300.0
 	var y := 205.0+(index%5)*45.0+sin(elapsed*0.7+index)*9.0
-	if near: y = 260.0+(index%3)*55.0+sin(elapsed+index)*15.0
 	return Vector2(x,y)
-func draw_traffic(canvas: Node2D, near: bool) -> void:
+func draw_traffic() -> void:
 	if vehicles.is_empty(): return
 	for i in range(TRAFFIC_COUNT):
-		if (i >= 10) != near: continue
 		var texture := vehicles[i%4]
-		var width := (144.0+(i%3)*17) if near else (48.0+(i%5)*11)
+		var width := 48.0+(i%5)*11
 		var height := width*texture.get_height()/texture.get_width()
 		var position := traffic_position(i)
 		var direction := 1.0 if i%2 == 0 else -1.0
 		var bank := sin(elapsed+i)*0.055 if i%4 >= 2 else 0.0
-		canvas.draw_set_transform(position,bank,Vector2(direction,1))
-		var tint := Color(0.86,0.94,1,0.95) if near else Color(0.47,0.70,0.90,0.72)
-		canvas.draw_texture_rect(texture,Rect2(-width/2,-height/2,width,height),false,tint)
-		canvas.draw_line(Vector2(-width*0.44,0),Vector2(-width*0.68,0),Color(0.3,0.85,1,0.12),4)
-	canvas.draw_set_transform(Vector2.ZERO)
+		draw_set_transform(position,bank,Vector2(direction,1))
+		var tint := Color(0.47,0.70,0.90,0.72)
+		draw_texture_rect(texture,Rect2(-width/2,-height/2,width,height),false,tint)
+		draw_line(Vector2(-width*0.44,0),Vector2(-width*0.68,0),Color(0.3,0.85,1,0.12),4)
+	draw_set_transform(Vector2.ZERO)
 func _draw() -> void:
 	draw_rect(Rect2(0,0,1280,720),Color("#081626"))
 	var size := Vector2(1740,1740.0*city.get_height()/city.get_width())
@@ -50,7 +47,7 @@ func _draw() -> void:
 	for tile in range(2):
 		draw_texture_rect(city,Rect2(Vector2(tile*size.x-shift,-110),size),false,Color(0.66,0.72,0.90))
 	draw_rect(Rect2(0,0,1280,720),Color(0.025,0.03,0.09,0.16))
-	draw_traffic(self,false)
+	draw_traffic()
 	var first := int(floor(camera_offset*0.32/210.0))-1
 	for i in range(first,first+9):
 		var x := i*210.0-camera_offset*0.32

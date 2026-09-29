@@ -91,6 +91,6 @@ O segundo golpe forte agora projeta a katana para a frente, com 16 poses novas m
 
 ## Cidade expandida — 29/09/2026
 
-Fase três vezes mais longa (9.000 unidades), com Acesso Oda, distrito Neon e Porto/Terminal 09. Quatorze plataformas adicionais, carros e motos voadoras com pilotos, trem, letreiros, chuva e equipamentos animados. Os veículos são ambientação.
+Fase três vezes mais longa (9.000 unidades), com Acesso Oda, distrito Neon e Porto/Terminal 09. Após simplificação visual, oito plataformas no total (quatro originais e quatro adicionais), carros e motos pequenos somente ao fundo, trem, letreiros, chuva e equipamentos animados. Os veículos grandes em primeiro plano foram removidos. Os veículos são ambientação.
 
 Detalhes em AEspadaDeOda/assets/city/CIDADE.md. Para integrar os golpes aéreos ainda salvos no outro computador, leia INTEGRAR_COMBOS_AEREOS.md antes de atualizar.
