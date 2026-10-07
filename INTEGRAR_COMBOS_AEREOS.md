@@ -1,5 +1,7 @@
 # Integrar os combos aéreos do outro computador
 
+**Situação em 07/10/2026:** a atualização para 0.1.6 reúne a cidade expandida, GFA1–GFA4, GF1–GF5 e os Ajoguns. A orientação abaixo é histórica. A base integrada foi validada com testes de movimento, combate, beiradas, cenário e inimigos; não é necessário repetir a integração dos mesmos arquivos. Antes de trazer qualquer outra cópia ainda não enviada, preserve seus commits e compare as diferenças.
+
 O autor informou em 29/09/2026 que os novos golpes no ar existem apenas no outro computador. A ampliação da cidade foi feita separadamente, a partir de 0a3a1d1.
 
 Ao retomar naquele computador:

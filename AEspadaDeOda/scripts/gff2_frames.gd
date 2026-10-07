@@ -1,4 +1,11 @@
 extends RefCounted
+## Correção de proporção do corpo em relação à guarda, sem medir pela espada.
+const BODY_SCALE: float = 0.80
+const FRONT_FOOT := Vector2(70, 0)
+
+static func normalize_point(point: Vector2) -> Vector2:
+ return FRONT_FOOT + (point - Vector2(54, 0)) * BODY_SCALE
+
 ## Recortes medidos: divisão deslocada da grade para manter a ponta da espada.
 ## O pivô usa a bota da frente; não usa o centro do desenho ou o brilho da lâmina.
 const POSES := [
@@ -39,9 +46,9 @@ static func build(frames: SpriteFrames, entry_pose: Texture2D) -> Dictionary:
   texture.region = Rect2(r[0],r[1],r[2],r[3])
   texture.filter_clip = true
   frames.add_frame("gff2", texture)
-  var factor := Vector2(pose.scale[0],pose.scale[1])
+  var factor := Vector2(pose.scale[0],pose.scale[1]) * BODY_SCALE
   var anchor := Vector2(pose.anchor[0],pose.anchor[1])
-  positions.append(Vector2(54,0)+(texture.region.size/2.0-anchor)*factor)
+  positions.append(FRONT_FOOT+(texture.region.size/2.0-anchor)*factor)
   scales.append(factor)
-  tips.append(Vector2(54,0)+(Vector2(pose.tip[0],pose.tip[1])-anchor)*factor)
+  tips.append(FRONT_FOOT+(Vector2(pose.tip[0],pose.tip[1])-anchor)*factor)
  return {"positions":positions,"scales":scales,"tips":tips}

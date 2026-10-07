@@ -16,7 +16,7 @@ func _draw() -> void:
 	draw_rect(Rect2(36, 25, 4, 59), gold)
 	text(Vector2(54, 53), "A ESPADA DE ODA", 30, paper)
 	text(Vector2(55, 80), "YOUKAI     /     CIDADE FUTURISTA", 13, gold)
-	text(Vector2(1045, 43), "PROTÓTIPO  /  01", 15, gold)
+	text(Vector2(1045, 43), "AJOGUNS / 0.1.6", 15, gold)
 	text(Vector2(1045, 68), "R  Reiniciar", 14, muted)
 	text(Vector2(1045, 89), "F1  Ver alcance", 14, muted)
 	draw_line(Vector2(36, 109), Vector2(1244, 109), Color("28333b"), 1)
@@ -24,9 +24,11 @@ func _draw() -> void:
 	draw_line(Vector2(36, 628), Vector2(1244, 628), Color("28333b"), 1)
 	_control(42, "A  D", "CORRER", "ou setas", "move_left", "move_right")
 	_control(264, "ESPAÇO", "PULAR", "segure para ir mais alto", "jump")
-	_control(567, "J / Z", "GF-1 → GF-2", "kung-fu + giro esquerdo", "light_attack")
+	var airborne: bool = is_instance_valid(player) and not player.is_on_floor() and player.action != "gf4"
+	_control(567, "J / Z", "GFA1 → 2 → 3 → 4" if airborne else "GF1 → 2 → 3 → 4 → 5", "soco / giro / soco / giro" if airborne else "direto final / arremesso", "light_attack")
 	_control(858, "K / X", "GFF-1 → GFF-2", "descendente + frontal", "heavy_attack")
 	if is_instance_valid(player):
+		_draw_combat_status()
 		draw_style_box(_status_style(), Rect2(36, 121, 280, 79))
 		text(Vector2(54, 145), player.state_label(), 16, gold)
 		if player.ledge.state != "":
@@ -61,3 +63,16 @@ func _status_style() -> StyleBoxFlat:
 	style.bg_color = Color(0.025, 0.04, 0.075, 0.88)
 	style.set_corner_radius_all(4)
 	return style
+
+func _draw_combat_status() -> void:
+	text(Vector2(475, 43), "VIDA", 13, gold)
+	for i in range(player.max_health):
+		draw_rect(Rect2(528 + i * 24, 30, 18, 16), Color("d4ad64") if i < player.health else Color("28333b"))
+	var level := player.get_parent()
+	text(Vector2(475, 78), "AJOGUNS DERROTADOS   %d / %d" % [level.defeated_count, level.enemy_total], 14, paper)
+	if player.dead:
+		draw_rect(Rect2(0, 210, 1280, 190), Color(0.02, 0.03, 0.06, 0.9))
+		text(Vector2(437, 288), "YOUKAI CAIU", 42, gold)
+		text(Vector2(459, 340), "Pressione R para tentar novamente", 20, paper)
+	elif level.enemy_total > 0 and level.defeated_count == level.enemy_total:
+		text(Vector2(455, 145), "PONTE LIVRE DOS AJOGUNS", 22, gold)

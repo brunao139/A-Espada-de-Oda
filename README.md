@@ -1,6 +1,16 @@
 # A Espada de Oda
 
-Protótipo 2D de ação e plataforma baseado no mangá autoral A Espada de Oda, com Youkai como protagonista. Versão **0.1.3**, desenvolvida em **Godot 4.7.2**, com GDScript e renderização Compatibility.
+Protótipo 2D de ação e plataforma baseado no mangá autoral A Espada de Oda, com Youkai como protagonista. Versão **0.1.6**, desenvolvida em **Godot 4.7.2**, com GDScript e renderização Compatibility.
+
+## Atualizações de 05 e 06/10/2026
+
+- 14 Ajoguns na cidade, com patrulha, perseguição, garras, vida, dano e morte. Arte redesenhada no estilo do Youkai, com animações próprias de caminhada, corrida, dano e queda.
+- Combo terrestre GF1–GF5 e aéreo GFA1–GFA4. GF4 usa 24 poses; GFA4 usa 16. GF5 é um soco direto do braço direito com 12 poses e permanência do braço estendido no final, mantendo o tamanho do personagem.
+- Cada impacto faz o Ajogun piscar e subir levemente. GF5 arremessa o alvo para trás, com 24 poses novas de voo e aterrissagem; quem sobrevive se levanta, e quem morre permanece deitado, alinhado ao chão.
+- Todos os golpes do Youkai ficaram 20% mais lentos, com animação, dano e efeitos sincronizados. GF5 provoca um tremor leve de câmera.
+- Youkai tem 12 poses de dano no chão e 12 no ar. Escritos e prédios desenhados em primeiro plano foram retirados, preservando as grades da ponte.
+
+332 verificações do projeto e 18 verificações dos recursos do executável passaram na preparação da versão. Prompts, parâmetros e novas folhas estão documentados em [GF5_E_ARREMESSO.md](AEspadaDeOda/assets/gf5/GF5_E_ARREMESSO.md).
 
 ## Abrir o projeto
 
@@ -28,14 +38,15 @@ O editor, os modelos de exportação e os executáveis do jogo não fazem parte 
 | Espaço, W ou seta para cima | Pular; segurar aumenta a altura |
 | Espaço, W ou ↑ na beirada | Subir; solte o pulo anterior e aperte novamente |
 | S ou ↓ | Soltar a beirada; segurar impede agarrar |
-| J ou Z | GF-1; novo toque emenda GF-2 |
+| J ou Z no chão | GF1 → GF2 → GF3 → GF4 → GF5, com novos toques |
+| J ou Z no ar | GFA1 → GFA2 → GFA3 → GFA4 |
 | K ou X | GFF-1; novo toque emenda GFF-2 |
 | R | Reiniciar o trecho |
 | F1 | Mostrar colisões e alcance dos golpes |
 
-Youkai agarra automaticamente quinas à sua frente durante a descida do salto, desde que haja espaço para ficar pendurado. Uma plataforma sinalizada no fim do trecho permite testar o movimento. A subida respeita colisões e tetos; plataformas móveis não são suportadas. Detalhes em [BEIRADAS.md](AEspadaDeOda/assets/ledge/BEIRADAS.md).
+Youkai agarra automaticamente quinas à sua frente durante a descida do salto, desde que haja espaço para ficar pendurado. A subida respeita colisões e tetos; plataformas móveis não são suportadas. Detalhes em [BEIRADAS.md](AEspadaDeOda/assets/ledge/BEIRADAS.md).
 
-O protótipo tem plataformas, câmera e cidade com paralaxe. Ainda não há inimigos, vida, objetivos, áudio de gameplay ou condição de vitória.
+O protótipo tem plataformas, câmera, cidade com paralaxe, vida e encontros com Ajoguns. Derrotar os 14 inimigos mostra a indicação de ponte livre; R reinicia a tentativa. Ainda não é uma fase finalizada e não há áudio de gameplay.
 
 ## Trabalhar em outras máquinas
 
@@ -54,7 +65,7 @@ Para colaborar, cada pessoa pode criar uma branch com `git switch -c nome-da-mel
 
 ## Continuidade e preservação
 
-Leia [CONTINUAR_A_ESPADA_DE_ODA.md](CONTINUAR_A_ESPADA_DE_ODA.md) antes de alterar as mecânicas. Preserve o pulo com dois giros, GF-1/GF-2, GFF-1/GFF-2, a conexão entre as poses dos cortes e as correções de recorte, transparência e rastro da espada.
+Leia [CONTINUAR_A_ESPADA_DE_ODA.md](CONTINUAR_A_ESPADA_DE_ODA.md) antes de alterar as mecânicas. Preserve o pulo com dois giros, GF1–GF5, GFA1–GFA4, GFF1–GFF2, a conexão entre as poses dos cortes e as correções de recorte, transparência e rastro da espada.
 
 - `AEspadaDeOda/scenes/`: personagem e área de teste.
 - `AEspadaDeOda/scripts/`: movimento, combate, interface e efeitos.
@@ -78,6 +89,9 @@ Com o executável do Godot disponível como `godot` no terminal:
 godot --headless --editor --path AEspadaDeOda --import --quit
 godot --headless --path AEspadaDeOda --script res://tests/smoke_test.gd
 godot --headless --path AEspadaDeOda --script res://tests/ledge_test.gd
+godot --headless --path AEspadaDeOda --script res://tests/ajogun_test.gd
+godot --headless --path AEspadaDeOda --script res://tests/art_v2_test.gd
+godot --headless --path AEspadaDeOda --script res://tests/finisher_test.gd
 godot --path AEspadaDeOda --script res://tests/intro_test.gd
 godot --path AEspadaDeOda --script res://tests/menu_test.gd
 ```
@@ -86,11 +100,11 @@ Para exportar, instale os modelos de exportação da mesma versão do Godot e us
 
 ## Atualização GFF-2 frontal — 28/09/2026
 
-O segundo golpe forte agora projeta a katana para a frente, com 16 poses novas mais a ligação com GFF-1 (17 quadros, 0,68 s). Use K ou X duas vezes para emendar. Dano e rastro acompanham a extensão horizontal, nos dois sentidos. Detalhes em AEspadaDeOda/assets/gff/GFF2_FRONTAL.md.
+O segundo golpe forte projeta a katana para a frente, com 16 poses novas mais a ligação com GFF-1 (17 quadros; duração original de 0,68 s, agora 0,85 s com a desaceleração da versão 0.1.6). Use K ou X duas vezes para emendar. Dano e rastro acompanham a extensão horizontal, nos dois sentidos. Detalhes em AEspadaDeOda/assets/gff/GFF2_FRONTAL.md.
 
 
 ## Cidade expandida — 29/09/2026
 
 Fase três vezes mais longa (9.000 unidades), com Acesso Oda, distrito Neon e Porto/Terminal 09. Após simplificação visual, oito plataformas no total (quatro originais e quatro adicionais), carros e motos pequenos somente ao fundo, trem, letreiros, chuva e equipamentos animados. Os veículos grandes em primeiro plano foram removidos. Os veículos são ambientação.
 
-Detalhes em AEspadaDeOda/assets/city/CIDADE.md. Para integrar os golpes aéreos ainda salvos no outro computador, leia INTEGRAR_COMBOS_AEREOS.md antes de atualizar.
+Detalhes históricos em AEspadaDeOda/assets/city/CIDADE.md. Os combos aéreos da cópia local já estão integrados nesta versão; INTEGRAR_COMBOS_AEREOS.md preserva o registro da integração.

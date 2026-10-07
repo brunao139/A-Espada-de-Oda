@@ -19,6 +19,7 @@ func _draw() -> void:
 	if hero.action == "gff2":
 		_draw_forward_trail(strength)
 		return
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE * hero.GFF1_BODY_SCALE)
 	var angle := lerpf(-1.55, 1.12, progress)
 	var center := Vector2(16, -91)
 	var outer := PackedVector2Array()
@@ -39,15 +40,17 @@ func _draw() -> void:
 	draw_polyline(outer, Color(0.1, 0.8, 1.0, 0.10 * strength), 15, true)
 	draw_colored_polygon(polygon, Color(0.22, 0.95, 1.0, 0.78 * strength))
 	draw_polyline(outer, Color(0.83, 1.0, 1.0, 0.95 * strength), 2.5, true)
+	draw_set_transform(Vector2.ZERO)
 
 
 func _draw_forward_trail(strength: float) -> void:
 	# Estocada: rastro curto ao longo da lâmina, sem o antigo arco ascendente.
-	var tip: Vector2 = hero.forward_blade_tips[hero.sprite.frame] + Vector2(5 * strength, 0)
-	var tail := tip - Vector2(65, 0)
-	draw_line(tail, tip, Color(0.1, 0.8, 1.0, 0.14 * strength), 12, true)
+	var factor: float = preload("res://scripts/gff2_frames.gd").BODY_SCALE
+	var tip: Vector2 = hero.forward_blade_tips[hero.sprite.frame] + Vector2(5 * strength, 0) * factor
+	var tail := tip - Vector2(65, 0) * factor
+	draw_line(tail, tip, Color(0.1, 0.8, 1.0, 0.14 * strength), 12 * factor, true)
 	draw_colored_polygon(PackedVector2Array([
-		tail, tip - Vector2(23, 6 * strength), tip,
-		tip - Vector2(23, -6 * strength)
+		tail, tip - Vector2(23, 6 * strength) * factor, tip,
+		tip - Vector2(23, -6 * strength) * factor
 	]), Color(0.22, 0.95, 1.0, 0.62 * strength))
-	draw_line(tail + Vector2(20,0), tip, Color(0.83,1,1,0.85*strength), 2, true)
+	draw_line(tail + Vector2(20,0) * factor, tip, Color(0.83,1,1,0.85*strength), 2 * factor, true)

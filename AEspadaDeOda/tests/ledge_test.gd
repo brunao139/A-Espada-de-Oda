@@ -56,8 +56,10 @@ func box(at: Vector2, size: Vector2) -> StaticBody2D:
 	return solid
 func run_tests() -> void:
 	scene = load("res://scenes/movement_lab.tscn").instantiate()
+	if scene.get_script() == preload("res://scripts/lab.gd"): scene.spawn_enemies = false
 	root.add_child(scene)
 	hero = scene.get_node("Youkai")
+	hero.attack_speed = 1.0 # Baseline temporal histórico; finisher_test cobre a velocidade padrão 0.8.
 	await step(5)
 	check(hero.sprite.sprite_frames.get_frame_count("ledge") == 8,"Oito poses dedicadas")
 	await grab()

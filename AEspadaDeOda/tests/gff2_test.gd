@@ -28,8 +28,10 @@ func target_at(pos: Vector2) -> Target:
 	return target
 func run_tests() -> void:
 	var scene = load("res://scenes/movement_lab.tscn").instantiate()
+	if scene.get_script() == preload("res://scripts/lab.gd"): scene.spawn_enemies = false
 	root.add_child(scene)
 	hero = scene.get_node("Youkai")
+	hero.attack_speed = 1.0 # Baseline temporal histórico; finisher_test cobre a velocidade padrão 0.8.
 	await step(5)
 	for face in [1,-1]:
 		hero.position = Vector2(600,580)
@@ -37,9 +39,10 @@ func run_tests() -> void:
 		hero.velocity = Vector2.ZERO
 		hero.action = ""
 		hero.next_is_uppercut = true
-		var front := target_at(hero.position+Vector2(face*155,-98))
+		var front := target_at(hero.position+Vector2(face*140,-70))
 		var back := target_at(hero.position+Vector2(-face*110,-98))
 		var above := target_at(hero.position+Vector2(face*110,-190))
+		var beyond := target_at(hero.position+Vector2(face*175,-70))
 		await step(3)
 		hero.next_is_uppercut = true
 		hero._start_attack("heavy")
@@ -56,12 +59,14 @@ func run_tests() -> void:
 		check(front.hits == [3], "Alvo frontal recebe um unico impacto de 3: "+str(face))
 		check(back.hits.is_empty(), "Sem dano atras do personagem: "+str(face))
 		check(above.hits.is_empty(), "Sem antiga caixa ascendente acima da espada: "+str(face))
+		check(beyond.hits.is_empty(), "Sem dano no alcance antigo apos reduzir espada: "+str(face))
 		check(seen.size() == 17, "Todos os 17 quadros sao exibidos na fisica real: "+str(face))
 		check(phase_safe and mirrored, "Dano acompanha extensao e espelhamento: "+str(face))
 		check(hero.action == "" and not hero.attack_active, "Recuperacao encerra dano e acao: "+str(face))
 		front.queue_free()
 		back.queue_free()
 		above.queue_free()
+		beyond.queue_free()
 		await step(2)
 	print("RESULT: %d checks, %d failures" % [checks, failures])
 	quit(1 if failures else 0)

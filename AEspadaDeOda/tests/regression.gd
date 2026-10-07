@@ -38,8 +38,10 @@ func reset_hero() -> void:
 
 func run_tests() -> void:
 	var scene = load("res://scenes/movement_lab.tscn").instantiate()
+	if scene.get_script() == preload("res://scripts/lab.gd"): scene.spawn_enemies = false
 	root.add_child(scene)
 	hero = scene.get_node("Youkai")
+	hero.attack_speed = 1.0 # Baseline temporal histórico; finisher_test cobre a velocidade padrão 0.8.
 	await step(5)
 	check(hero.is_on_floor(), "Colisao com piso")
 	check(hero.sprite.sprite_frames.has_animation("gf1") and hero.sprite.sprite_frames.has_animation("gf2") and hero.sprite.sprite_frames.has_animation("gff1") and hero.sprite.sprite_frames.has_animation("gff2"), "Quatro secoes GF-1 GF-2 GFF-1 GFF-2")
@@ -126,7 +128,7 @@ func run_tests() -> void:
 	check(hero.action == "gff2", "Combo GFF-1 para GFF-2 sem voltar a guarda")
 	check(hero.sprite.sprite_frames.get_frame_texture("gff1", 5) == hero.sprite.sprite_frames.get_frame_texture("gff2", 0), "Mesma pose exata na ligacao dos dois cortes")
 	await step(15)
-	check(hero.attack_active and hero.attack_shape.shape.size.x > 140 and hero.attack_shape.shape.size.y < 70, "GFF-2 tem impacto frontal alinhado a lamina")
+	check(hero.attack_active and hero.attack_shape.shape.size.x > 100 and hero.attack_shape.shape.size.y < 55, "GFF-2 tem impacto frontal alinhado a lamina normalizada")
 	Input.action_press("jump")
 	await step(2)
 	Input.action_release("jump")
@@ -150,7 +152,7 @@ func run_tests() -> void:
 	Input.action_press("light_attack")
 	await step(2)
 	Input.action_release("light_attack")
-	check(hero.action == "gf1" and hero.sprite.rotation == 0 and not hero.is_on_floor(), "GF-1 aereo interrompe giro corretamente")
+	check(hero.action == "gfa1" and hero.sprite.rotation == 0 and not hero.is_on_floor(), "GFA1 aereo interrompe giro corretamente")
 	await reset_hero()
 	hero.position = Vector2(70, 580)
 	Input.action_press("move_left")

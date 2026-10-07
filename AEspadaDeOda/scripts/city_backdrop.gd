@@ -48,26 +48,6 @@ func _draw() -> void:
 		draw_texture_rect(city,Rect2(Vector2(tile*size.x-shift,-110),size),false,Color(0.66,0.72,0.90))
 	draw_rect(Rect2(0,0,1280,720),Color(0.025,0.03,0.09,0.16))
 	draw_traffic()
-	var first := int(floor(camera_offset*0.32/210.0))-1
-	for i in range(first,first+9):
-		var x := i*210.0-camera_offset*0.32
-		var top := 280.0+sin(i*3.71)*80
-		var width := 95.0+fposmod(i*37.0,80)
-		draw_rect(Rect2(x,top,width,460),Color("#0c263c"))
-		draw_rect(Rect2(x+8,top+6,width-16,460),Color("#103047"))
-		draw_line(Vector2(x+width-6,top),Vector2(x+width-6,670),Color("#286378"),2)
-		draw_rect(Rect2(x+15,top-17,width-30,17),Color("#123049"))
-		draw_line(Vector2(x+width*0.5,top-17),Vector2(x+width*0.5,top-53),Color("#244960"),3)
-		draw_circle(Vector2(x+width*0.5,top-54),2,Color(1,0.32,0.48,0.55+sin(elapsed*2+i)*0.25))
-		for row in range(9):
-			for col in range(4):
-				if posmod(i+row*3+col,5) == 0: continue
-				var lit := 0.4+0.16*sin(elapsed*0.6+i+row)
-				draw_rect(Rect2(x+16+col*22,top+25+row*29,12,4),Color(0.23,0.78,0.91,lit))
-		if posmod(i,3) == 0:
-			draw_rect(Rect2(x+21,top+87,width-43,43),Color("#102137"))
-			draw_line(Vector2(x+21,top+88),Vector2(x+width-22,top+88),Color("#ed639e"),2)
-			draw_string(ThemeDB.fallback_font,Vector2(x+28,top+115),"NEON",HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("#c78ce1"))
 	_draw_train()
 	# Chuva fina e pontos de luz ficam no fundo, sem cobrir a silhueta do herói.
 	for i in range(48):

@@ -25,6 +25,7 @@ func place(pos: Vector2) -> void:
 	hero.jump_spinning = false
 func run() -> void:
 	scene = load("res://scenes/movement_lab.tscn").instantiate()
+	if scene.get_script() == preload("res://scripts/lab.gd"): scene.spawn_enemies = false
 	root.add_child(scene)
 	hero = scene.get_node("Youkai")
 	await step(4)
